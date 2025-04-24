@@ -12,8 +12,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
     
-dependency_overrides:
-  meta: any
+
 
   cupertino_icons: ^1.0.6
   get_it: ^7.6.6
@@ -69,7 +68,7 @@ dependency_overrides:
   dropdown_button2: ^2.3.9
   gradient_borders: ^1.0.0
   flutter_spinkit: ^5.2.1
-  open_file_plus: ^3.4.1+1
+  open_file_plus: ^2.0.1
   flutter_pdfview: ^1.2.7
   readmore: ^3.0.0
   open_file_manager: ^1.0.2
@@ -96,7 +95,8 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-
+dependency_overrides:
+  open_file_plus: ^3.4.1+1
 
 flutter:
   uses-material-design: true
