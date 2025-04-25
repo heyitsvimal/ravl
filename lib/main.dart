@@ -64,28 +64,31 @@ Future<void> main() async {
   HttpOverrides.global = MyHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
 
-
-  if(Firebase.apps.isEmpty) {
-    if(Platform.isAndroid) {
-      try{
-        ///todo you need to configure that firebase Option with your own firebase to run your app
-        await Firebase.initializeApp(options: const FirebaseOptions(
+  try {
+    if (Firebase.apps.isEmpty) {
+      if (Platform.isAndroid) {
+        await Firebase.initializeApp(
+          options: const FirebaseOptions(
             apiKey: "AIzaSyCzaujxAK9_8u5QYxBus2a5de1O8B5GME",
             projectId: "ravlcs",
             messagingSenderId: "634104282822",
-            appId: "1:634104282822:android:e68ca05582b6588d20e1c7"
-        ));
-      }finally{
+            appId: "1:634104282822:android:e68ca05582b6588d20e1c7",
+          ),
+        );
+      } else {
         await Firebase.initializeApp();
       }
-    }else{
-      await Firebase.initializeApp();
     }
+  } catch (e) {
+    print("Firebase Init Error: $e");
   }
+
   await FlutterDownloader.initialize(debug: true, ignoreSsl: true);
   await di.init();
 
-  flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()?.requestNotificationsPermission();
+  flutterLocalNotificationsPlugin
+      .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+      ?.requestNotificationsPermission();
 
   NotificationBody? body;
   try {
@@ -95,60 +98,60 @@ Future<void> main() async {
     }
     await NotificationHelper.initialize(flutterLocalNotificationsPlugin);
     FirebaseMessaging.onBackgroundMessage(myBackgroundMessageHandler);
-  }catch(_) {}
+  } catch (e, stack) {
+    print("Notification init error: $e");
+  }
 
-
-  // await NotificationHelper.initialize(flutterLocalNotificationsPlugin);
-  // FirebaseMessaging.onBackgroundMessage(myBackgroundMessageHandler);
-
-  runApp(MultiProvider(providers: [
-      ChangeNotifierProvider(create: (context) => di.sl<CategoryController>()),
-      ChangeNotifierProvider(create: (context) => di.sl<ShopController>()),
-      ChangeNotifierProvider(create: (context) => di.sl<FlashDealController>()),
-      ChangeNotifierProvider(create: (context) => di.sl<FeaturedDealController>()),
-      ChangeNotifierProvider(create: (context) => di.sl<BrandController>()),
-      ChangeNotifierProvider(create: (context) => di.sl<ProductController>()),
-      ChangeNotifierProvider(create: (context) => di.sl<BannerController>()),
-      ChangeNotifierProvider(create: (context) => di.sl<ProductDetailsController>()),
-      ChangeNotifierProvider(create: (context) => di.sl<OnBoardingController>()),
-      ChangeNotifierProvider(create: (context) => di.sl<AuthController>()),
-      ChangeNotifierProvider(create: (context) => di.sl<SearchProductController>()),
-      ChangeNotifierProvider(create: (context) => di.sl<CouponController>()),
-      ChangeNotifierProvider(create: (context) => di.sl<ChatController>()),
-      ChangeNotifierProvider(create: (context) => di.sl<OrderController>()),
-      ChangeNotifierProvider(create: (context) => di.sl<NotificationController>()),
-      ChangeNotifierProvider(create: (context) => di.sl<ProfileController>()),
-      ChangeNotifierProvider(create: (context) => di.sl<WishListController>()),
-      ChangeNotifierProvider(create: (context) => di.sl<SplashController>()),
-      ChangeNotifierProvider(create: (context) => di.sl<CartController>()),
-      ChangeNotifierProvider(create: (context) => di.sl<SupportTicketController>()),
-      ChangeNotifierProvider(create: (context) => di.sl<LocalizationController>()),
-      ChangeNotifierProvider(create: (context) => di.sl<ThemeController>()),
-      ChangeNotifierProvider(create: (context) => di.sl<GoogleSignInController>()),
-      ChangeNotifierProvider(create: (context) => di.sl<FacebookLoginController>()),
-      ChangeNotifierProvider(create: (context) => di.sl<AddressController>()),
-      ChangeNotifierProvider(create: (context) => di.sl<WalletController>()),
-      ChangeNotifierProvider(create: (context) => di.sl<CompareController>()),
-      ChangeNotifierProvider(create: (context) => di.sl<CheckoutController>()),
-      ChangeNotifierProvider(create: (context) => di.sl<LoyaltyPointController>()),
-      ChangeNotifierProvider(create: (context) => di.sl<LocationController>()),
-      ChangeNotifierProvider(create: (context) => di.sl<ContactUsController>()),
-      ChangeNotifierProvider(create: (context) => di.sl<ShippingController>()),
-      ChangeNotifierProvider(create: (context) => di.sl<OrderDetailsController>()),
-      ChangeNotifierProvider(create: (context) => di.sl<RefundController>()),
-      ChangeNotifierProvider(create: (context) => di.sl<ReOrderController>()),
-      ChangeNotifierProvider(create: (context) => di.sl<ReviewController>()),
-      ChangeNotifierProvider(create: (context) => di.sl<SellerProductController>()),
-      ChangeNotifierProvider(create: (context) => di.sl<RestockController>()),
-    ],
-    child: MyApp(body: body),
-  ));
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => di.sl<CategoryController>()),
+        ChangeNotifierProvider(create: (context) => di.sl<ShopController>()),
+        ChangeNotifierProvider(create: (context) => di.sl<FlashDealController>()),
+        ChangeNotifierProvider(create: (context) => di.sl<FeaturedDealController>()),
+        ChangeNotifierProvider(create: (context) => di.sl<BrandController>()),
+        ChangeNotifierProvider(create: (context) => di.sl<ProductController>()),
+        ChangeNotifierProvider(create: (context) => di.sl<BannerController>()),
+        ChangeNotifierProvider(create: (context) => di.sl<ProductDetailsController>()),
+        ChangeNotifierProvider(create: (context) => di.sl<OnBoardingController>()),
+        ChangeNotifierProvider(create: (context) => di.sl<AuthController>()),
+        ChangeNotifierProvider(create: (context) => di.sl<SearchProductController>()),
+        ChangeNotifierProvider(create: (context) => di.sl<CouponController>()),
+        ChangeNotifierProvider(create: (context) => di.sl<ChatController>()),
+        ChangeNotifierProvider(create: (context) => di.sl<OrderController>()),
+        ChangeNotifierProvider(create: (context) => di.sl<NotificationController>()),
+        ChangeNotifierProvider(create: (context) => di.sl<ProfileController>()),
+        ChangeNotifierProvider(create: (context) => di.sl<WishListController>()),
+        ChangeNotifierProvider(create: (context) => di.sl<SplashController>()),
+        ChangeNotifierProvider(create: (context) => di.sl<CartController>()),
+        ChangeNotifierProvider(create: (context) => di.sl<SupportTicketController>()),
+        ChangeNotifierProvider(create: (context) => di.sl<LocalizationController>()),
+        ChangeNotifierProvider(create: (context) => di.sl<ThemeController>()),
+        ChangeNotifierProvider(create: (context) => di.sl<GoogleSignInController>()),
+        ChangeNotifierProvider(create: (context) => di.sl<FacebookLoginController>()),
+        ChangeNotifierProvider(create: (context) => di.sl<AddressController>()),
+        ChangeNotifierProvider(create: (context) => di.sl<WalletController>()),
+        ChangeNotifierProvider(create: (context) => di.sl<CompareController>()),
+        ChangeNotifierProvider(create: (context) => di.sl<CheckoutController>()),
+        ChangeNotifierProvider(create: (context) => di.sl<LoyaltyPointController>()),
+        ChangeNotifierProvider(create: (context) => di.sl<LocationController>()),
+        ChangeNotifierProvider(create: (context) => di.sl<ContactUsController>()),
+        ChangeNotifierProvider(create: (context) => di.sl<ShippingController>()),
+        ChangeNotifierProvider(create: (context) => di.sl<OrderDetailsController>()),
+        ChangeNotifierProvider(create: (context) => di.sl<RefundController>()),
+        ChangeNotifierProvider(create: (context) => di.sl<ReOrderController>()),
+        ChangeNotifierProvider(create: (context) => di.sl<ReviewController>()),
+        ChangeNotifierProvider(create: (context) => di.sl<SellerProductController>()),
+        ChangeNotifierProvider(create: (context) => di.sl<RestockController>()),
+      ],
+      child: MyApp(body: body),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
   final NotificationBody? body;
   const MyApp({super.key, required this.body});
-
 
   @override
   Widget build(BuildContext context) {
@@ -156,16 +159,19 @@ class MyApp extends StatelessWidget {
     for (var language in AppConstants.languages) {
       locals.add(Locale(language.languageCode!, language.countryCode));
     }
+
     return Consumer<ThemeController>(
       builder: (context, themeController, _) {
         return MaterialApp(
           title: AppConstants.appName,
           navigatorKey: navigatorKey,
           debugShowCheckedModeBanner: false,
-          theme: themeController.darkTheme ? dark : light(
-            primaryColor: themeController.selectedPrimaryColor,
-            secondaryColor: themeController.selectedPrimaryColor,
-          ),
+          theme: themeController.darkTheme
+              ? dark
+              : light(
+                  primaryColor: themeController.selectedPrimaryColor,
+                  secondaryColor: themeController.selectedPrimaryColor,
+                ),
           locale: Provider.of<LocalizationController>(context).locale,
           localizationsDelegates: [
             AppLocalization.delegate,
@@ -174,13 +180,16 @@ class MyApp extends StatelessWidget {
             GlobalCupertinoLocalizations.delegate,
             FallbackLocalizationDelegate()
           ],
-          builder:(context,child){
-            return MediaQuery(data: MediaQuery.of(context).copyWith(textScaler: TextScaler.noScaling), child: child!);
+          builder: (context, child) {
+            return MediaQuery(
+              data: MediaQuery.of(context).copyWith(textScaler: TextScaler.noScaling),
+              child: child!,
+            );
           },
           supportedLocales: locals,
-          home: SplashScreen(body: body,),
+          home: SplashScreen(body: body),
         );
-      }
+      },
     );
   }
 }
@@ -189,6 +198,7 @@ class Get {
   static BuildContext? get context => navigatorKey.currentContext;
   static NavigatorState? get navigator => navigatorKey.currentState;
 }
+
 class MyHttpOverrides extends HttpOverrides {
   @override
   HttpClient createHttpClient(SecurityContext? context) {
