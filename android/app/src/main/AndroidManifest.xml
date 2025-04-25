@@ -35,7 +35,7 @@
     </queries>
 
     <application
-        android:label="6Valley"
+        android:label="RAVL"
         android:name="${applicationName}"
         android:requestLegacyExternalStorage="true"
         android:usesCleartextTraffic="true"

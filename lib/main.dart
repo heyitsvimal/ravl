@@ -70,10 +70,10 @@ Future<void> main() async {
       try{
         ///todo you need to configure that firebase Option with your own firebase to run your app
         await Firebase.initializeApp(options: const FirebaseOptions(
-            apiKey: "current_key here",
-            projectId: "mobilesdk_app_id here",
-            messagingSenderId: "project_number here",
-            appId: "project_id here"
+            apiKey: "AIzaSyCzaujxAK9_8u5QYxBus2a5de1O8B5GME",
+            projectId: "ravlcs",
+            messagingSenderId: "634104282822",
+            appId: "ravlcs"
         ));
       }finally{
         await Firebase.initializeApp();
