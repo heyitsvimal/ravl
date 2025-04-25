@@ -73,7 +73,7 @@ Future<void> main() async {
             apiKey: "AIzaSyCzaujxAK9_8u5QYxBus2a5de1O8B5GME",
             projectId: "ravlcs",
             messagingSenderId: "634104282822",
-            appId: "ravlcs"
+            appId: "1:634104282822:android:e68ca05582b6588d20e1c7"
         ));
       }finally{
         await Firebase.initializeApp();
